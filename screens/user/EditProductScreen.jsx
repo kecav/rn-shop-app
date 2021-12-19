@@ -22,23 +22,22 @@ const EditProductScreen = (props) => {
     // const { prodId } = props.route.params;
     const [prodId, setProdId] = useState(props.route.params.prodId);
     const editedProduct = useSelector((state) =>
-        state.products.userProducts.find((prod) => prod.id === prodId)
+        state.products.availableProducts.find((prod) => prod.id === prodId)
     );
-
+    
+    // console.log("PRODUCT: ", useSelector((state)=> state));
+    // console.log("PRODUCT: ", prodId);
+    // console.log("EDITED PRODUCT: ", editedProduct);
     const [isNewProduct, setIsNewProduct] = useState(
         prodId == -1 ? true : false
     );
-    const [title, setTitle] = useState(
-        editedProduct ? editedProduct.title : ""
-    );
+    const [title, setTitle] = useState(isNewProduct ? "" : editedProduct.title);
     const [imageUrl, setImageUrl] = useState(
-        editedProduct ? editedProduct.imageUrl : ""
+        isNewProduct ? "" : editedProduct.imageUrl
     );
-    const [price, setPrice] = useState(
-        editedProduct ? editedProduct.price : "0"
-    );
+    const [price, setPrice] = useState(isNewProduct ? "" : editedProduct.price);
     const [description, setDescription] = useState(
-        editedProduct ? editedProduct.description : ""
+        isNewProduct ? "" : editedProduct.description
     );
 
     const titleChangeHandler = (text) => {
@@ -50,7 +49,8 @@ const EditProductScreen = (props) => {
         setTitle(text);
     };
 
-    console.log("PRODUCT: ",editedProduct);
+    console.log("PRODUCT: ", prodId);
+    console.log("PRODUCT: ", editedProduct == true);
     // console.log("is New Product : ", isNewProduct);
     // console.log("prodId : ", prodId);
 
@@ -115,7 +115,7 @@ const EditProductScreen = (props) => {
                         onChangeText={(text) => setImageUrl(text)}
                     />
                 </View>
-                {editedProduct ? null : (
+                {isNewProduct ? (
                     <View style={styles.formControl}>
                         <Text style={styles.label}>Price</Text>
                         <TextInput
@@ -125,7 +125,7 @@ const EditProductScreen = (props) => {
                             keyboardType="decimal-pad"
                         />
                     </View>
-                )}
+                ) : null}
                 <View style={styles.formControl}>
                     <Text style={styles.label}>Description</Text>
                     <TextInput

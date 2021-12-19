@@ -33,6 +33,8 @@ const UserProductsScreen = (props) => {
         );
     }
 
+    // console.log("UserProductScreen: ", userProducts);
+
     return (
         <FlatList
             data={userProducts}
@@ -42,7 +44,7 @@ const UserProductsScreen = (props) => {
                     image={itemData.item.imageUrl}
                     title={itemData.item.title}
                     price={itemData.item.price}
-                    onSelect={() => {}}
+                    onSelect={() => {console.log(itemData)}}
                 >
                     <Button
                         color={Colors.primary}
