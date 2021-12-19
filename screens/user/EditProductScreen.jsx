@@ -14,14 +14,20 @@ import CustomHeaderButton from "../../components/UI/HeaderButton";
 import Colors from "../../constants/Colors";
 
 const EditProductScreen = (props) => {
-    const [isTitleValid, setIsTitleValid] = useState(false);
+    const [isTitleValid, setIsTitleValid] = useState(true);
+    // const [error, setError] = useState(false);
+    // const [isLoading, setIsLoading] = useState(false);
     const dispatch = useDispatch();
 
-    const { prodId } = props.route.params;
+    // const { prodId } = props.route.params;
+    const [prodId, setProdId] = useState(props.route.params.prodId);
     const editedProduct = useSelector((state) =>
         state.products.userProducts.find((prod) => prod.id === prodId)
     );
 
+    const [isNewProduct, setIsNewProduct] = useState(
+        prodId == -1 ? true : false
+    );
     const [title, setTitle] = useState(
         editedProduct ? editedProduct.title : ""
     );
@@ -44,18 +50,22 @@ const EditProductScreen = (props) => {
         setTitle(text);
     };
 
-    // console.log(editedProduct ? `Update ${prodId}` : "New");
+    console.log("PRODUCT: ",editedProduct);
+    // console.log("is New Product : ", isNewProduct);
+    // console.log("prodId : ", prodId);
 
-    const submitHandler = useCallback(() => {
+    const submitHandler = async () => {
         if (!isTitleValid) {
             Alert.alert("Invalid Submit", "Please Enter valid input title", [
                 { text: "OKAY" },
             ]);
             return;
         }
-        console.log("Submitting!");
-        if (editedProduct) {
-            dispatch(
+
+        // console.log("Prod ID: ", prodId);
+
+        if (!isNewProduct) {
+            await dispatch(
                 productActions.updateProduct(
                     prodId,
                     title,
@@ -63,9 +73,9 @@ const EditProductScreen = (props) => {
                     imageUrl
                 )
             );
-            console.log("UPDATING !!");
+            console.log("REQUESTING UPDATE");
         } else {
-            dispatch(
+            await dispatch(
                 productActions.createProduct(
                     title,
                     description,
@@ -73,10 +83,10 @@ const EditProductScreen = (props) => {
                     price
                 )
             );
-            console.log("CREATING !!");
+            console.log("REQUESTING CREATE");
         }
         props.navigation.goBack();
-    }, [dispatch, prodId, title, description, imageUrl, price, isTitleValid]);
+    };
 
     useEffect(() => {
         if (props.route.params.submitted) {
@@ -129,6 +139,7 @@ const EditProductScreen = (props) => {
     );
 };
 
+// screen options
 export const EditProductScreenOptions = (props) => {
     return {
         headerStyle: {

@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, Button, Alert, View, Text } from "react-native";
+import { FlatList, Button, Alert, View, Text, StyleSheet } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import ProductItem from "../../components/shop/ProductItem";
@@ -9,7 +9,7 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../../components/UI/HeaderButton";
 
 const UserProductsScreen = (props) => {
-    const userProducts = useSelector((state) => state.products.userProducts);
+    const userProducts = useSelector((state) => state.products.availableProducts);
     const dispatch = useDispatch();
 
     const deleteHandler = (id) => {
@@ -27,13 +27,7 @@ const UserProductsScreen = (props) => {
 
     if (userProducts.length === 0) {
         return (
-            <View
-                style={{
-                    flex: 1,
-                    justifyContent: "center",
-                    alignItems: "center",
-                }}
-            >
+            <View style={styles.centered}>
                 <Text>No Products, Start adding some.</Text>
             </View>
         );
@@ -103,4 +97,9 @@ export const UserProductScreenOptions = (props) => {
         ),
     };
 };
+
+const styles = StyleSheet.create({
+    centered: { flex: 1, justifyContent: "center", alignItems: "center" },
+});
+
 export default UserProductsScreen;

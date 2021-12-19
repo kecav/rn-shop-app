@@ -6,10 +6,10 @@ export const SET_ORDERS = "SET_ORDERS";
 export const fetchOrders = () => {
     return async(dispatch, getState) => {
         // const token = getState().auth.token;
-        const userId = getState().auth.userId;
+        // const userId = getState().auth.userId;
         try {
             const response = await fetch(
-                `https://rn-shopapp-d455e-default-rtdb.asia-southeast1.firebasedatabase.app/orders/${userId}.json`
+                `https://rn-shopapp-d455e-default-rtdb.asia-southeast1.firebasedatabase.app/orders/u3.json`
             );
             if (!response.ok) {
                 throw new Error("Something went Wrong !");
@@ -40,11 +40,11 @@ export const fetchOrders = () => {
 
 export const addOrder = (cartItems, totalAmount) => {
     return async(dispatch, getState) => {
-        const token = getState().auth.token;
-        const userId = getState().auth.userId;
+        // const token = getState().auth.token;
+        // const userId = getState().auth.userId;
         const date = new Date();
         const response = await fetch(
-            `https://rn-shopapp-d455e-default-rtdb.asia-southeast1.firebasedatabase.app/orders/${userId}.json?auth=${token}`, {
+            `https://rn-shopapp-d455e-default-rtdb.asia-southeast1.firebasedatabase.app/orders/u3.json`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
