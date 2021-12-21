@@ -6,7 +6,7 @@ export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 export const SET_PRODUCTS = "SET_PRODUCTS";
 
 export const fetchProducts = () => {
-    return async(dispatch, getState) => {
+    return async (dispatch, getState) => {
         const userId = getState().auth.userId;
         try {
             const response = await fetch(
@@ -32,7 +32,13 @@ export const fetchProducts = () => {
                 );
             }
 
-            dispatch({ type: SET_PRODUCTS, products: loadedProducts, userProducts: loadedProducts.filter(prod => prod.ownerId === userId) });
+            dispatch({
+                type: SET_PRODUCTS,
+                products: loadedProducts,
+                userProducts: loadedProducts.filter(
+                    (prod) => prod.ownerId === userId
+                ),
+            });
         } catch (error) {
             throw error;
         }
@@ -40,23 +46,25 @@ export const fetchProducts = () => {
 };
 
 export const deleteProduct = (productId) => {
-    return async(dispatch, getState) => {
-        // const token = getState().auth.token;
+    return async (dispatch, getState) => {
+        const token = getState().auth.token;
         await fetch(
-            `https://rn-shopapp-d455e-default-rtdb.asia-southeast1.firebasedatabase.app/products/${productId}.json`, {
-                method: "DELETE"
-            });
+            `https://rn-shopapp-d455e-default-rtdb.asia-southeast1.firebasedatabase.app/products/${productId}.json?auth=${token}`,
+            {
+                method: "DELETE",
+            }
+        );
         dispatch({ type: DELETE_PRODUCT, pId: productId });
     };
 };
 
-
 export const createProduct = (title, description, imageUrl, price) => {
-    return async(dispatch, getState) => {
-        // const token = getState().auth.token;
-        // const userId = getState().auth.userId;
+    return async (dispatch, getState) => {
+        const token = getState().auth.token;
+        const userId = getState().auth.userId;
         const response = await fetch(
-            `https://rn-shopapp-d455e-default-rtdb.asia-southeast1.firebasedatabase.app/products.json`, {
+            `https://rn-shopapp-d455e-default-rtdb.asia-southeast1.firebasedatabase.app/products.json?auth=${token}`,
+            {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -66,7 +74,7 @@ export const createProduct = (title, description, imageUrl, price) => {
                     description,
                     imageUrl,
                     price,
-                    // ownerId: userId
+                    ownerId: userId,
                 }),
             }
         );
@@ -82,21 +90,22 @@ export const createProduct = (title, description, imageUrl, price) => {
                 description,
                 imageUrl,
                 price,
-                // ownerId: userId
+                ownerId: userId,
             },
         });
     };
 };
 
 export const updateProduct = (id, title, description, imageUrl) => {
-    return async(dispatch, getState) => {
-        // const token = getState().auth.token;
+    return async (dispatch, getState) => {
+        const token = getState().auth.token;
         await fetch(
-            `https://rn-shopapp-d455e-default-rtdb.asia-southeast1.firebasedatabase.app/products/${id}.json`, {
+            `https://rn-shopapp-d455e-default-rtdb.asia-southeast1.firebasedatabase.app/products/${id}.json?auth=${token}`,
+            {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
-                }, 
+                },
                 body: JSON.stringify({
                     title,
                     description,
@@ -105,7 +114,7 @@ export const updateProduct = (id, title, description, imageUrl) => {
             }
         );
 
-        console.log('UPDATING PRODUCT FROM ACTIONS :', id);
+        console.log("UPDATING PRODUCT FROM ACTIONS :", id);
         dispatch({
             type: UPDATE_PRODUCT,
             pId: id,

@@ -15,19 +15,13 @@ import Colors from "../../constants/Colors";
 
 const EditProductScreen = (props) => {
     const [isTitleValid, setIsTitleValid] = useState(true);
-    // const [error, setError] = useState(false);
-    // const [isLoading, setIsLoading] = useState(false);
     const dispatch = useDispatch();
 
-    // const { prodId } = props.route.params;
     const [prodId, setProdId] = useState(props.route.params.prodId);
     const editedProduct = useSelector((state) =>
         state.products.availableProducts.find((prod) => prod.id === prodId)
     );
     
-    // console.log("PRODUCT: ", useSelector((state)=> state));
-    // console.log("PRODUCT: ", prodId);
-    // console.log("EDITED PRODUCT: ", editedProduct);
     const [isNewProduct, setIsNewProduct] = useState(
         prodId == -1 ? true : false
     );
@@ -49,11 +43,8 @@ const EditProductScreen = (props) => {
         setTitle(text);
     };
 
-    console.log("PRODUCT: ", prodId);
-    console.log("PRODUCT: ", editedProduct == true);
-    // console.log("is New Product : ", isNewProduct);
-    // console.log("prodId : ", prodId);
-
+    // console.log("PRODUCT: ", prodId);
+    // console.log("PRODUCT: ", editedProduct == true);
     const submitHandler = async () => {
         if (!isTitleValid) {
             Alert.alert("Invalid Submit", "Please Enter valid input title", [
@@ -61,8 +52,6 @@ const EditProductScreen = (props) => {
             ]);
             return;
         }
-
-        // console.log("Prod ID: ", prodId);
 
         if (!isNewProduct) {
             await dispatch(
@@ -93,7 +82,6 @@ const EditProductScreen = (props) => {
             submitHandler();
         }
     }, [submitHandler]);
-    // console.log(editedProduct);
 
     return (
         <ScrollView>
@@ -154,8 +142,7 @@ export const EditProductScreenOptions = (props) => {
                     iconName="md-save"
                     onPress={() => {
                         props.navigation.navigate(
-                            // "EditProductScreen", {prodId: -1, submitted: true}
-                            "EditProductScreen",
+                            "EditProduct",
                             { submitted: true }
                         );
                     }}

@@ -9,7 +9,7 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../../components/UI/HeaderButton";
 
 const UserProductsScreen = (props) => {
-    const userProducts = useSelector((state) => state.products.availableProducts);
+    const userProducts = useSelector((state) => state.products.userProducts);
     const dispatch = useDispatch();
 
     const deleteHandler = (id) => {
@@ -33,8 +33,6 @@ const UserProductsScreen = (props) => {
         );
     }
 
-    // console.log("UserProductScreen: ", userProducts);
-
     return (
         <FlatList
             data={userProducts}
@@ -50,7 +48,7 @@ const UserProductsScreen = (props) => {
                         color={Colors.primary}
                         title="Edit"
                         onPress={() => {
-                            props.navigation.navigate("EditProductScreen", {
+                            props.navigation.navigate("EditProduct", {
                                 prodId: itemData.item.id,
                             });
                         }}
@@ -90,7 +88,7 @@ export const UserProductScreenOptions = (props) => {
                     title="Edit user product"
                     iconName="md-create"
                     onPress={() => {
-                        props.navigation.navigate("EditProductScreen", {
+                        props.navigation.navigate("EditProduct", {
                             prodId: -1,
                         });
                     }}

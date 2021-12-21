@@ -5,7 +5,7 @@ import { DELETE_PRODUCT } from "../actions/products";
 
 const initialState = {
     items: {},
-    totalAmount: 0,
+    totalAmount: Number(0),
 };
 
 export default (state = initialState, action) => {
@@ -39,7 +39,7 @@ export default (state = initialState, action) => {
                     ...state.items,
                     [addedProduct.id]: updatedOrNewCartItem,
                 },
-                totalAmount: state.totalAmount + prodPrice,
+                totalAmount: state.totalAmount + Number(prodPrice).toFixed(2),
             };
         case REMOVE_FROM_CART:
             const selectedCartItem = state.items[action.pId];
@@ -64,7 +64,7 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 items: updatedCartItems,
-                totalAmount: state.totalAmount - selectedCartItem.productPrice,
+                totalAmount: (state.totalAmount - Number(selectedCartItem.productPrice)).toFixed(2),
             };
         case ADD_ORDER:
             return initialState;
