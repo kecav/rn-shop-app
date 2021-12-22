@@ -3,6 +3,7 @@ import { View, Text, Button, StyleSheet, Pressable } from "react-native";
 
 import CartItem from "./CartItem";
 import Colors from "../../constants/Colors";
+import CustomButton from "../UI/CustomButton";
 
 const OrderItem = (props) => {
     const [showDetails, setShowDetails] = useState(false);
@@ -13,23 +14,13 @@ const OrderItem = (props) => {
                 <Text style={styles.totalAmount}>${props.amount}</Text>
                 <Text style={styles.date}>{props.date}</Text>
             </View>
-            <Pressable
-                style={styles.buttonStyle}
-                onPress={() => {
-                    setShowDetails((prevState) => !prevState);
-                }}
-            >
-                <Text style={styles.textStyle}>
-                    {showDetails ? "Hide Details" : "Show Details"}
-                </Text>
-            </Pressable>
-            {/* <Button
-                color={Colors.primary}
+
+            <CustomButton
                 title={showDetails ? "Hide Details" : "Show Details"}
                 onPress={() => {
                     setShowDetails((prevState) => !prevState);
                 }}
-            /> */}
+            />
             {showDetails && (
                 <View style={styles.detailItems}>
                     {props.items.map((cartItem) => (
@@ -80,14 +71,14 @@ const styles = StyleSheet.create({
         width: "100%",
     },
     buttonStyle: {
-        alignItems: 'center',
-        justifyContent: 'center',
+        alignItems: "center",
+        justifyContent: "center",
         paddingVertical: 10,
         paddingHorizontal: 16,
         borderRadius: 16,
         elevation: 3,
         backgroundColor: Colors.primary,
-      },
+    },
     textStyle: {
         fontSize: 15,
         // lineHeight: 21,

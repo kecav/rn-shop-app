@@ -6,7 +6,6 @@ import {
     ActivityIndicator,
     Text,
     StyleSheet,
-    Pressable,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -16,6 +15,7 @@ import * as productsActions from "../../store/actions/products";
 import Colors from "../../constants/Colors";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../../components/UI/HeaderButton";
+import CustomButton from "../../components/UI/CustomButton";
 
 const ProductsOverviewScreen = (props) => {
     const [error, setError] = useState();
@@ -98,39 +98,7 @@ const ProductsOverviewScreen = (props) => {
                         );
                     }}
                 >
-                    <Pressable
-                        style={({ pressed }) => [
-                            styles.buttonStyle,
-                            {
-                                opacity: pressed ? 0.75 : 1
-                            },
-                        ]}
-                        // style={styles.buttonStyle}
-                        onPress={() => {
-                            selectItemHandler(
-                                itemData.item.id,
-                                itemData.item.title
-                            );
-                        }}
-                    >
-                        <Text style={styles.textStyle}>View Details</Text>
-                    </Pressable>
-                    <Pressable
-                        style={({ pressed }) => [
-                            styles.buttonStyle,
-                            {
-                                opacity: pressed ? 0.75 : 1
-                            },
-                        ]}
-                        onPress={() => {
-                            dispatch(cartActions.addToCart(itemData.item));
-                        }}
-                    >
-                        <Text style={styles.textStyle}>Add to Cart</Text>
-                    </Pressable>
-
-                    {/* <Button
-                        color={Colors.primary}
+                    <CustomButton
                         title="View Details"
                         onPress={() => {
                             selectItemHandler(
@@ -139,13 +107,12 @@ const ProductsOverviewScreen = (props) => {
                             );
                         }}
                     />
-                    <Button
-                        color={Colors.primary}
+                    <CustomButton
                         title="Add to Cart"
-                        onPress={() => {
-                            dispatch(cartActions.addToCart(itemData.item));
-                        }}
-                    /> */}
+                        onPress={() =>
+                            dispatch(cartActions.addToCart(itemData.item))
+                        }
+                    />
                 </ProductItem>
             )}
         />
@@ -195,7 +162,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         paddingVertical: 14,
         paddingHorizontal: 16,
-        borderRadius: 14,
+        borderRadius: 16,
         elevation: 3,
         backgroundColor: Colors.primary,
     },

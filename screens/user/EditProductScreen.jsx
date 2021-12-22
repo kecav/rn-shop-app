@@ -14,14 +14,13 @@ import CustomHeaderButton from "../../components/UI/HeaderButton";
 import Colors from "../../constants/Colors";
 
 const EditProductScreen = (props) => {
-    const [isTitleValid, setIsTitleValid] = useState(true);
     const dispatch = useDispatch();
 
     const [prodId, setProdId] = useState(props.route.params.prodId);
     const editedProduct = useSelector((state) =>
         state.products.availableProducts.find((prod) => prod.id === prodId)
     );
-    
+
     const [isNewProduct, setIsNewProduct] = useState(
         prodId == -1 ? true : false
     );
@@ -34,20 +33,32 @@ const EditProductScreen = (props) => {
         isNewProduct ? "" : editedProduct.description
     );
 
-    const titleChangeHandler = (text) => {
-        if (text.trim().length === 0) {
-            setIsTitleValid(false);
+    const isInputValid = () => {
+        if (isNewProduct) {
+            if (
+                title.trim().length === 0 ||
+                imageUrl.trim().length === 0 ||
+                price.trim().length === 0 ||
+                description.trim().length === 0
+            )
+                return false;
         } else {
-            setIsTitleValid(true);
+            if (
+                title.trim().length === 0 ||
+                imageUrl.trim().length === 0 ||
+                description.trim().length === 0
+            )
+                return false;
         }
-        setTitle(text);
+        return true;
     };
 
     // console.log("PRODUCT: ", prodId);
     // console.log("PRODUCT: ", editedProduct == true);
     const submitHandler = async () => {
-        if (!isTitleValid) {
-            Alert.alert("Invalid Submit", "Please Enter valid input title", [
+        console.log(isInputValid());
+        if (!isInputValid()) {
+            Alert.alert("Invalid Submit", "Please Enter valid input", [
                 { text: "OKAY" },
             ]);
             return;
@@ -80,6 +91,7 @@ const EditProductScreen = (props) => {
     useEffect(() => {
         if (props.route.params.submitted) {
             submitHandler();
+            props.route.params.submitted = false;
         }
     }, [submitHandler]);
 
@@ -91,7 +103,7 @@ const EditProductScreen = (props) => {
                     <TextInput
                         style={styles.input}
                         value={title}
-                        onChangeText={titleChangeHandler}
+                        onChangeText={(text) => setTitle(text)}
                         autoCapitalize="sentences"
                     />
                 </View>
@@ -141,10 +153,9 @@ export const EditProductScreenOptions = (props) => {
                     title="save"
                     iconName="md-save"
                     onPress={() => {
-                        props.navigation.navigate(
-                            "EditProduct",
-                            { submitted: true }
-                        );
+                        props.navigation.navigate("EditProduct", {
+                            submitted: true,
+                        });
                     }}
                 />
             </HeaderButtons>

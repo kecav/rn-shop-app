@@ -1,3 +1,3 @@
-export const FirebaseAPI = () => {
-    return 'AIzaSyB_pqoqEzXRtrTEyrXASTDoWZ_ccgXW_ww';
-}
+// export const FirebaseAPI = () => {
+//     return 'AIzaSyB_pqoqEzXRtrTEyrXASTDoWZ_ccgXW_ww';
+// }

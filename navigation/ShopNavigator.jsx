@@ -1,7 +1,13 @@
 import React from "react";
+import { SafeAreaView, Button, View } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import {
+    createDrawerNavigator,
+    DrawerItemList,
+} from "@react-navigation/drawer";
 import { Ionicons } from "@expo/vector-icons";
+import { useDispatch } from "react-redux";
+import * as authActions from "../store/actions/auth";
 
 import ProductsOverviewScreen, {
     ProductsOverviewScreenOptions,
@@ -17,7 +23,7 @@ import EditProductScreen, {
 } from "../screens/user/EditProductScreen";
 import CartScreen, { CartCreenOptions } from "../screens/shop/CartScreen";
 import AuthScreen from "../screens/user/AuthScreen";
-import OrderScreen, {OrderScreenOptions} from "../screens/shop/OrderScreen";
+import OrderScreen, { OrderScreenOptions } from "../screens/shop/OrderScreen";
 import Colors from "../constants/Colors";
 
 const ProductsStackNavigator = createStackNavigator();
@@ -90,8 +96,29 @@ export const AuthNavigator = () => {
 };
 
 export const ShopNavigator = () => {
+    const dispatch = useDispatch();
     return (
-        <ShopDrawerNavigator.Navigator screenOptions={{ headerShown: false }}>
+        <ShopDrawerNavigator.Navigator
+            drawerContent={(props) => {
+                return (
+                    <View style={{ flex: 1, paddingTop: 30 }}>
+                        <SafeAreaView
+                            forceInset={{ top: "always", horizontal: "never" }}
+                        >
+                            <DrawerItemList {...props} />
+                            <Button
+                                title="Logout"
+                                color={Colors.primary}
+                                onPress={() => {
+                                    dispatch(authActions.logout());
+                                }}
+                            />
+                        </SafeAreaView>
+                    </View>
+                );
+            }}
+            screenOptions={{ headerShown: false }}
+        >
             <ShopDrawerNavigator.Screen
                 name="Products"
                 component={ProductsNavigator}

@@ -6,6 +6,7 @@ import {
     Button,
     StyleSheet,
     ActivityIndicator,
+    Pressable,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -17,7 +18,6 @@ import * as orderActions from "../../store/actions/orders";
 const CartScreen = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
-    // console.log(cartTotalAmount.toFixed(4));
 
     const cartItems = useSelector((state) => {
         const transformedCartItems = [];
@@ -52,12 +52,24 @@ const CartScreen = (props) => {
                 {isLoading ? (
                     <ActivityIndicator size="small" color={Colors.accent} />
                 ) : (
-                    <Button
-                        color={Colors.accent}
-                        title="Order Now"
-                        disabled={cartItems.length === 0}
+                    <Pressable
+                        style={({ pressed }) => [
+                            styles.buttonStyle,
+                            {
+                                opacity: pressed ? 0.75 : 1,
+                            },
+                            {
+                                backgroundColor:
+                                    cartItems.length === 0
+                                        ? "#bbb"
+                                        : Colors.primary,
+                            },
+                        ]}
                         onPress={sendOrderHandler}
-                    />
+                        disabled={cartItems.length === 0}
+                    >
+                        <Text style={styles.textStyle}>Order Now</Text>
+                    </Pressable>
                 )}
             </View>
             <FlatList
@@ -116,7 +128,23 @@ const styles = StyleSheet.create({
     },
     amount: {
         color: Colors.primary,
-        paddingLeft: 5,
+        marginLeft: 55,
+        fontWeight: "bold",
+        fontSize: 20,
+    },
+    buttonStyle: {
+        alignItems: "center",
+        justifyContent: "center",
+        paddingVertical: 12,
+        paddingHorizontal: 16,
+        borderRadius: 16,
+        elevation: 3,
+        backgroundColor: Colors.primary,
+    },
+    textStyle: {
+        fontSize: 15,
+        letterSpacing: 0.25,
+        color: "white",
     },
 });
 
