@@ -1,17 +1,19 @@
 // Import the functions you need from the SDKs you need
+import config from './config';
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyB_pqoqEzXRtrTEyrXASTDoWZ_ccgXW_ww",
-  authDomain: "rn-shopapp-d455e.firebaseapp.com",
-  databaseURL: "https://rn-shopapp-d455e-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "rn-shopapp-d455e",
-  storageBucket: "rn-shopapp-d455e.appspot.com",
-  messagingSenderId: "631730032832",
-  appId: "1:631730032832:web:c6bda7ae25f1067b821d25"
+    apiKey: config.API_KEY,
+    authDomain: config.AUTH_DOMAIN,
+    databaseURL: config.DATABASE_URL,
+    projectId: config.PROJECT_ID,
+    storageBucket: config.STORAGE_BUCKET,
+    messagingSenderId: config.MESSAGINSENDERID,
+    appId: config.API_ID,
 };
 
 // Initialize Firebase

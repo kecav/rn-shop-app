@@ -8,6 +8,7 @@ const CustomButton = (props) => {
             style={({ pressed }) => [
                 styles.buttonStyle,
                 { opacity: pressed ? 0.75 : 1 },
+                {...props.style}
             ]}
             onPress={props.onPress}
             disabled={props.disabled}

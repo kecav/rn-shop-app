@@ -24,6 +24,7 @@ import EditProductScreen, {
 import CartScreen, { CartCreenOptions } from "../screens/shop/CartScreen";
 import AuthScreen from "../screens/user/AuthScreen";
 import OrderScreen, { OrderScreenOptions } from "../screens/shop/OrderScreen";
+import CustomButton from "../components/UI/CustomButton";
 import Colors from "../constants/Colors";
 
 const ProductsStackNavigator = createStackNavigator();
@@ -106,11 +107,20 @@ export const ShopNavigator = () => {
                             forceInset={{ top: "always", horizontal: "never" }}
                         >
                             <DrawerItemList {...props} />
-                            <Button
-                                title="Logout"
-                                color={Colors.primary}
+
+                            <CustomButton
+                                title="LOGOUT"
                                 onPress={() => {
                                     dispatch(authActions.logout());
+                                }}
+                                style={{
+                                    borderRadius: 16,
+                                    marginTop: 10,
+                                    alignSelf: "center",
+                                    paddingVertical: 10,
+                                    width: "75%",
+                                    justifySelf: 'center',
+                                    backgroundColor: Colors.logout
                                 }}
                             />
                         </SafeAreaView>
