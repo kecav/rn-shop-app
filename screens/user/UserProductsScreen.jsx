@@ -1,5 +1,13 @@
 import React from "react";
-import { FlatList, Button, Alert, View, Text, StyleSheet } from "react-native";
+import {
+    FlatList,
+    Button,
+    Alert,
+    View,
+    Text,
+    StyleSheet,
+    Pressable,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import ProductItem from "../../components/shop/ProductItem";
@@ -48,7 +56,34 @@ const UserProductsScreen = (props) => {
                         });
                     }}
                 >
-                    <Button
+                    <Pressable
+                        style={({ pressed }) => [
+                            styles.buttonStyle,
+                            {
+                                opacity: pressed ? 0.75 : 1,
+                            },
+                        ]}
+                        onPress={() => {
+                            props.navigation.navigate("EditProduct", {
+                                prodId: itemData.item.id,
+                            });
+                        }}
+                    >
+                        <Text style={styles.textStyle}>Edit Product</Text>
+                    </Pressable>
+                    <Pressable
+                        style={({ pressed }) => [
+                            styles.buttonStyle,
+                            {
+                                opacity: pressed ? 0.75 : 1,
+                            },
+                        ]}
+                        onPress={deleteHandler.bind(this, itemData.item.id)}
+                    >
+                        <Text style={styles.textStyle}>Delete Product</Text>
+                    </Pressable>
+
+                    {/* <Button
                         color={Colors.primary}
                         title="Edit"
                         onPress={() => {
@@ -61,7 +96,7 @@ const UserProductsScreen = (props) => {
                         color={Colors.primary}
                         title="Delete"
                         onPress={deleteHandler.bind(this, itemData.item.id)}
-                    />
+                    /> */}
                 </ProductItem>
             )}
         />
@@ -104,6 +139,20 @@ export const UserProductScreenOptions = (props) => {
 
 const styles = StyleSheet.create({
     centered: { flex: 1, justifyContent: "center", alignItems: "center" },
+    buttonStyle: {
+        alignItems: "center",
+        justifyContent: "center",
+        paddingVertical: 14,
+        paddingHorizontal: 16,
+        borderRadius: 14,
+        elevation: 3,
+        backgroundColor: Colors.primary,
+    },
+    textStyle: {
+        fontSize: 15,
+        letterSpacing: 0.25,
+        color: "white",
+    },
 });
 
 export default UserProductsScreen;

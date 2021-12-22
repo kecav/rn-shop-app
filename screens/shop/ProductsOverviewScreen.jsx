@@ -6,6 +6,7 @@ import {
     ActivityIndicator,
     Text,
     StyleSheet,
+    Pressable,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -97,7 +98,38 @@ const ProductsOverviewScreen = (props) => {
                         );
                     }}
                 >
-                    <Button
+                    <Pressable
+                        style={({ pressed }) => [
+                            styles.buttonStyle,
+                            {
+                                opacity: pressed ? 0.75 : 1
+                            },
+                        ]}
+                        // style={styles.buttonStyle}
+                        onPress={() => {
+                            selectItemHandler(
+                                itemData.item.id,
+                                itemData.item.title
+                            );
+                        }}
+                    >
+                        <Text style={styles.textStyle}>View Details</Text>
+                    </Pressable>
+                    <Pressable
+                        style={({ pressed }) => [
+                            styles.buttonStyle,
+                            {
+                                opacity: pressed ? 0.75 : 1
+                            },
+                        ]}
+                        onPress={() => {
+                            dispatch(cartActions.addToCart(itemData.item));
+                        }}
+                    >
+                        <Text style={styles.textStyle}>Add to Cart</Text>
+                    </Pressable>
+
+                    {/* <Button
                         color={Colors.primary}
                         title="View Details"
                         onPress={() => {
@@ -113,7 +145,7 @@ const ProductsOverviewScreen = (props) => {
                         onPress={() => {
                             dispatch(cartActions.addToCart(itemData.item));
                         }}
-                    />
+                    /> */}
                 </ProductItem>
             )}
         />
@@ -157,6 +189,20 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
+    },
+    buttonStyle: {
+        alignItems: "center",
+        justifyContent: "center",
+        paddingVertical: 14,
+        paddingHorizontal: 16,
+        borderRadius: 14,
+        elevation: 3,
+        backgroundColor: Colors.primary,
+    },
+    textStyle: {
+        fontSize: 15,
+        letterSpacing: 0.25,
+        color: "white",
     },
 });
 

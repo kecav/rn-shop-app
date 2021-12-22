@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import { View, Text, Button, StyleSheet, Pressable } from "react-native";
 
 import CartItem from "./CartItem";
 import Colors from "../../constants/Colors";
@@ -10,18 +10,26 @@ const OrderItem = (props) => {
     return (
         <View style={styles.orderItem}>
             <View style={styles.summary}>
-                <Text style={styles.totalAmount}>
-                    ${props.amount}
-                </Text>
+                <Text style={styles.totalAmount}>${props.amount}</Text>
                 <Text style={styles.date}>{props.date}</Text>
             </View>
-            <Button
+            <Pressable
+                style={styles.buttonStyle}
+                onPress={() => {
+                    setShowDetails((prevState) => !prevState);
+                }}
+            >
+                <Text style={styles.textStyle}>
+                    {showDetails ? "Hide Details" : "Show Details"}
+                </Text>
+            </Pressable>
+            {/* <Button
                 color={Colors.primary}
                 title={showDetails ? "Hide Details" : "Show Details"}
                 onPress={() => {
                     setShowDetails((prevState) => !prevState);
                 }}
-            />
+            /> */}
             {showDetails && (
                 <View style={styles.detailItems}>
                     {props.items.map((cartItem) => (
@@ -48,7 +56,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: "white",
         margin: 20,
-        padding: 10,
+        padding: 20,
         alignItems: "flex-end",
     },
     summary: {
@@ -60,8 +68,8 @@ const styles = StyleSheet.create({
     },
     totalAmount: {
         // fontFamily: "open-sans-bold",
-        fontWeight: 'bold',
-        fontSize: 16,
+        fontWeight: "bold",
+        fontSize: 18,
     },
     date: {
         fontSize: 16,
@@ -70,6 +78,22 @@ const styles = StyleSheet.create({
     },
     detailItems: {
         width: "100%",
+    },
+    buttonStyle: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 10,
+        paddingHorizontal: 16,
+        borderRadius: 16,
+        elevation: 3,
+        backgroundColor: Colors.primary,
+      },
+    textStyle: {
+        fontSize: 15,
+        // lineHeight: 21,
+        // fontWeight: "bold",
+        letterSpacing: 0.25,
+        color: "white",
     },
 });
 
