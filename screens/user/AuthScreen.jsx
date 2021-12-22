@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { useDispatch } from "react-redux";
 import * as authActions from "../../store/actions/auth.jsx";
+import { LinearGradient } from "expo-linear-gradient";
 // import Colors from '../../constants/Colors';
 
 const AuthScreen = (props) => {
@@ -30,11 +31,17 @@ const AuthScreen = (props) => {
         setIsLoading(true);
         setError(null);
 
+        if(email.trim().length==0 || password.trim().length==0){
+            setError("Please enter valid credentials");
+            setIsLoading(false);
+            return;
+        }
+
         console.log(method, "EMAIL: ", email, " PASS:", password);
         try {
             if (method === "signup") {
                 await dispatch(authActions.signup(email, password));
-                props.navigation.navigate('Products');
+                props.navigation.navigate("Products");
                 // console.log(props);
             } else if ((method = "login")) {
                 await dispatch(authActions.login(email, password));
@@ -47,46 +54,54 @@ const AuthScreen = (props) => {
 
     return (
         <KeyboardAvoidingView style={styles.container}>
-            <View style={styles.inputContainer}>
-                <TextInput
-                    placeholder="Email"
-                    value={email}
-                    keyboardType="email-address"
-                    onChangeText={(text) => setEmail(text)}
-                    style={styles.input}
-                    autoCapitalize="none"
-                />
-                <TextInput
-                    placeholder="Password"
-                    value={password}
-                    keyboardType="default"
-                    onChangeText={(text) => setPassword(text)}
-                    style={styles.input}
-                    secureTextEntry
-                />
-            </View>
-            {isLoading ? (
-                <ActivityIndicator size="large" color="#f00" />
-            ) : (
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity
-                        onPress={() => {
-                            authHandler("login");
-                        }}
-                        style={styles.button}
-                    >
-                        <Text style={styles.buttonText}>Login</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => {
-                            authHandler("signup");
-                        }}
-                        style={[styles.button, styles.buttonOutline]}
-                    >
-                        <Text style={styles.buttonOutlineText}>Register</Text>
-                    </TouchableOpacity>
+            <LinearGradient
+                // Background Linear Gradient
+                colors={["#0093E9", "#CE9FFC"]}
+                style={styles.background}
+            >
+                <View style={styles.inputContainer}>
+                    <TextInput
+                        placeholder="Email"
+                        value={email}
+                        keyboardType="email-address"
+                        onChangeText={(text) => setEmail(text)}
+                        style={styles.input}
+                        autoCapitalize="none"
+                    />
+                    <TextInput
+                        placeholder="Password"
+                        value={password}
+                        keyboardType="default"
+                        onChangeText={(text) => setPassword(text)}
+                        style={styles.input}
+                        secureTextEntry
+                    />
                 </View>
-            )}
+                {isLoading ? (
+                    <ActivityIndicator size="large" color="#f00" />
+                ) : (
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity
+                            onPress={() => {
+                                authHandler("login");
+                            }}
+                            style={styles.button}
+                        >
+                            <Text style={styles.buttonText}>Login</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => {
+                                authHandler("signup");
+                            }}
+                            style={[styles.button, styles.buttonOutline]}
+                        >
+                            <Text style={styles.buttonOutlineText}>
+                                Register
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                )}
+            </LinearGradient>
         </KeyboardAvoidingView>
     );
 };
@@ -106,6 +121,7 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         borderRadius: 10,
         marginTop: 5,
+        fontSize: 16
     },
     buttonContainer: {
         width: "60%",
@@ -136,6 +152,7 @@ const styles = StyleSheet.create({
         fontWeight: "700",
         fontSize: 16,
     },
+    background: { flex: 1, justifyContent: "center", alignItems: "center", width: '100%' },
 });
 
 export default AuthScreen;

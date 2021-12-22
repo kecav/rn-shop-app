@@ -5,11 +5,14 @@ import {
     Text,
     ActivityIndicator,
     StyleSheet,
+    Button
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import OrderItem from "../../components/shop/OrderItem";
 import * as orderActions from "../../store/actions/orders";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import CustomHeaderButton from "../../components/UI/HeaderButton";
 import Colors from "../../constants/Colors";
 
 const OrderScreen = (props) => {
@@ -55,6 +58,27 @@ const OrderScreen = (props) => {
             )}
         />
     );
+};
+
+export const OrderScreenOptions = (props) => {
+    return {
+        headerStyle: {
+            backgroundColor: Colors.primary,
+        },
+        headerTintColor: "#ffffff",
+        title: "Orders",
+        headerLeft: () => (
+            <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+                <Item
+                    title="drawerMenu"
+                    iconName="md-menu"
+                    onPress={() => {
+                        props.navigation.toggleDrawer();
+                    }}
+                />
+            </HeaderButtons>
+        ),
+    };
 };
 
 const styles = StyleSheet.create({

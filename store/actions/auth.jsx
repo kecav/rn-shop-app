@@ -6,7 +6,7 @@ import {
     signOut,
 } from "firebase/auth";
 const auth = getAuth();
-import AsyncStorage from "@react-native-async-storage/async-storage";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const LOGOUT = "LOGOUT";
 export const AUTHENTICATE = "AUTHENTICATE";
@@ -82,7 +82,7 @@ export const login = (email, password) => {
 
 export const logout = () => {
     clearLogoutTimer();
-    AsyncStorage.removeItem("userData");
+    // AsyncStorage.removeItem("userData");
     return async (dispatch) => {
         try {
             await signOut(auth);
@@ -108,7 +108,7 @@ const setLogoutTimer = (expirationTime) => {
         timer = setTimeout(() => {
             console.log("TOKEN EXPIRED LOGGING OUT ");
             dispatch(logout());
-        }, expirationTime / 10);
+        }, expirationTime / 5);
     };
 };
 
@@ -119,7 +119,7 @@ const storeData = async (token, userId, expirationDate) => {
             userId: userId,
             expiryDate: expirationDate.toISOString(),
         });
-        await AsyncStorage.setItem("userData", userData);
+        // await AsyncStorage.setItem("userData", userData);
     } catch (e) {
         // saving error
         console.log(e);

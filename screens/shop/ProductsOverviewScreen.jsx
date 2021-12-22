@@ -11,11 +11,10 @@ import { useSelector, useDispatch } from "react-redux";
 
 import ProductItem from "../../components/shop/ProductItem";
 import * as cartActions from "../../store/actions/cart";
-import * as productActions from "../../store/actions/products";
+import * as productsActions from "../../store/actions/products";
 import Colors from "../../constants/Colors";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../../components/UI/HeaderButton";
-
 
 const ProductsOverviewScreen = (props) => {
     const [error, setError] = useState();
@@ -29,12 +28,11 @@ const ProductsOverviewScreen = (props) => {
         setIsRefreshing(true);
         // setIsLoading(true);
         try {
-            await dispatch(productActions.fetchProducts());
+            await dispatch(productsActions.fetchProducts());
         } catch (error) {
             setError(error.message);
         }
         setIsRefreshing(false);
-        // setIsLoading(false);
         console.log("Reloading");
     }, [dispatch, setError, setIsLoading]);
 
@@ -111,7 +109,7 @@ const ProductsOverviewScreen = (props) => {
                     />
                     <Button
                         color={Colors.primary}
-                        title="To Cart"
+                        title="Add to Cart"
                         onPress={() => {
                             dispatch(cartActions.addToCart(itemData.item));
                         }}

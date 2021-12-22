@@ -42,7 +42,11 @@ const UserProductsScreen = (props) => {
                     image={itemData.item.imageUrl}
                     title={itemData.item.title}
                     price={itemData.item.price}
-                    onSelect={() => {console.log(itemData)}}
+                    onSelect={() => {
+                        props.navigation.navigate("EditProduct", {
+                            prodId: itemData.item.id,
+                        });
+                    }}
                 >
                     <Button
                         color={Colors.primary}
@@ -70,7 +74,7 @@ export const UserProductScreenOptions = (props) => {
             backgroundColor: Colors.primary,
         },
         headerTintColor: "#ffffff",
-        title: "User Product",
+        title: "Your Products",
         headerLeft: () => (
             <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
                 <Item

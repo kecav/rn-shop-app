@@ -8,40 +8,36 @@ export const SET_PRODUCTS = "SET_PRODUCTS";
 export const fetchProducts = () => {
     return async (dispatch, getState) => {
         const userId = getState().auth.userId;
-        try {
-            const response = await fetch(
-                "https://rn-shopapp-d455e-default-rtdb.asia-southeast1.firebasedatabase.app/products.json"
-            );
-            if (!response.ok) {
-                throw new Error("Something went Wrong !");
-            }
-            const resData = await response.json();
-            // console.log("RES DATA from ACTIONS: ", resData);
-            const loadedProducts = [];
-
-            for (const key in resData) {
-                loadedProducts.push(
-                    new Product(
-                        key,
-                        resData[key].ownerId,
-                        resData[key].title,
-                        resData[key].imageUrl,
-                        resData[key].description,
-                        resData[key].price
-                    )
-                );
-            }
-
-            dispatch({
-                type: SET_PRODUCTS,
-                products: loadedProducts,
-                userProducts: loadedProducts.filter(
-                    (prod) => prod.ownerId === userId
-                ),
-            });
-        } catch (error) {
-            throw error;
+        const token = getState().auth.token;
+        const response = await fetch(
+            `https://rn-shopapp-d455e-default-rtdb.asia-southeast1.firebasedatabase.app/products.json?auth=${token}`
+        );
+        if (!response.ok) {
+            throw new Error("Something went Wrong !");
         }
+        const resData = await response.json();
+        const loadedProducts = [];
+
+        for (const key in resData) {
+            loadedProducts.push(
+                new Product(
+                    key,
+                    resData[key].ownerId,
+                    resData[key].title,
+                    resData[key].imageUrl,
+                    resData[key].description,
+                    resData[key].price
+                )
+            );
+        }
+
+        dispatch({
+            type: SET_PRODUCTS,
+            products: loadedProducts,
+            userProducts: loadedProducts.filter(
+                (prod) => prod.ownerId === userId
+            ),
+        });
     };
 };
 

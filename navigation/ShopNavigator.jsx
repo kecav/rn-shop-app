@@ -17,8 +17,8 @@ import EditProductScreen, {
 } from "../screens/user/EditProductScreen";
 import CartScreen, { CartCreenOptions } from "../screens/shop/CartScreen";
 import AuthScreen from "../screens/user/AuthScreen";
-import OrderScreen from "../screens/shop/OrderScreen";
-// import Colors from "../constants/Colors";
+import OrderScreen, {OrderScreenOptions} from "../screens/shop/OrderScreen";
+import Colors from "../constants/Colors";
 
 const ProductsStackNavigator = createStackNavigator();
 const OrdersStackNavigator = createStackNavigator();
@@ -71,7 +71,7 @@ export const OrdersNavigator = () => {
             <OrdersStackNavigator.Screen
                 name="Order"
                 component={OrderScreen}
-                options={UserProductScreenOptions}
+                options={OrderScreenOptions}
             />
         </OrdersStackNavigator.Navigator>
     );

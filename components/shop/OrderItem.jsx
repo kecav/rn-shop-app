@@ -11,7 +11,6 @@ const OrderItem = (props) => {
         <View style={styles.orderItem}>
             <View style={styles.summary}>
                 <Text style={styles.totalAmount}>
-                    {/* ${props.amount.toFixed(2)} */}
                     ${props.amount}
                 </Text>
                 <Text style={styles.date}>{props.date}</Text>
@@ -50,7 +49,7 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         margin: 20,
         padding: 10,
-        alignItems: "center",
+        alignItems: "flex-end",
     },
     summary: {
         flexDirection: "row",
