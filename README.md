@@ -1,6 +1,6 @@
 # React Native Shop App 
 
-![UI](../assets/screenshots/S(1).png)
+![UI Design](../assets/screenshots/UI.png)
 
 
 
