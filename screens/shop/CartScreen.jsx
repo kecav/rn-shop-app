@@ -80,6 +80,7 @@ const CartScreen = (props) => {
                         quantity={itemData.item.quantity}
                         title={itemData.item.productTitle}
                         amount={itemData.item.sum}
+                        showDelete={true}
                         onRemove={() => {
                             dispatch(
                                 cartActions.removeFromCart(
@@ -100,7 +101,7 @@ export const CartCreenOptions = (props) => {
             backgroundColor: Colors.primary,
         },
         headerTintColor: "#ffffff",
-        headerTitle: "Cart Screen",
+        headerTitle: "Cart Items",
     };
 };
 

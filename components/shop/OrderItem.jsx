@@ -29,6 +29,7 @@ const OrderItem = (props) => {
                             quantity={cartItem.quantity}
                             amount={cartItem.sum}
                             title={cartItem.productTitle}
+                            showDelete={false}
                         />
                     ))}
                 </View>

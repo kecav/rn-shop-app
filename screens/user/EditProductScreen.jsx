@@ -53,10 +53,7 @@ const EditProductScreen = (props) => {
         return true;
     };
 
-    // console.log("PRODUCT: ", prodId);
-    // console.log("PRODUCT: ", editedProduct == true);
     const submitHandler = async () => {
-        console.log(isInputValid());
         if (!isInputValid()) {
             Alert.alert("Invalid Submit", "Please Enter valid input", [
                 { text: "OKAY" },
@@ -89,11 +86,14 @@ const EditProductScreen = (props) => {
     };
 
     useEffect(() => {
+        if (isNewProduct) {
+            props.navigation.setOptions({ headerTitle: "Add new Product" });
+        }
         if (props.route.params.submitted) {
             submitHandler();
             props.route.params.submitted = false;
         }
-    }, [submitHandler]);
+    }, [submitHandler, props.navigation]);
 
     return (
         <ScrollView>
@@ -105,6 +105,7 @@ const EditProductScreen = (props) => {
                         value={title}
                         onChangeText={(text) => setTitle(text)}
                         autoCapitalize="sentences"
+                        placeholder="Product Title ..."
                     />
                 </View>
                 <View style={styles.formControl}>
@@ -113,6 +114,7 @@ const EditProductScreen = (props) => {
                         style={styles.input}
                         value={imageUrl}
                         onChangeText={(text) => setImageUrl(text)}
+                        placeholder="Product image link ..."
                     />
                 </View>
                 {isNewProduct ? (
@@ -123,6 +125,7 @@ const EditProductScreen = (props) => {
                             value={price}
                             onChangeText={(text) => setPrice(text)}
                             keyboardType="decimal-pad"
+                            placeholder="Product price ..."
                         />
                     </View>
                 ) : null}
@@ -132,6 +135,7 @@ const EditProductScreen = (props) => {
                         style={styles.input}
                         value={description}
                         onChangeText={(text) => setDescription(text)}
+                        placeholder="Product decription ..."
                     />
                 </View>
             </View>
@@ -141,6 +145,7 @@ const EditProductScreen = (props) => {
 
 // screen options
 export const EditProductScreenOptions = (props) => {
+    // console.log(props);
     return {
         headerStyle: {
             backgroundColor: Colors.primary,
@@ -166,20 +171,23 @@ export const EditProductScreenOptions = (props) => {
 const styles = StyleSheet.create({
     form: {
         margin: 20,
+        padding: 10,
     },
     formControl: {
         width: "100%",
     },
     label: {
         // fontFamily: "open-sans-bold",
+        fontSize: 16,
         fontWeight: "bold",
         marginVertical: 8,
     },
     input: {
-        paddingHorizontal: 2,
+        paddingHorizontal: 0,
         paddingVertical: 5,
-        borderBottomColor: "#ccc",
-        borderBottomWidth: 1,
+        borderColor: "#ccc",
+        borderBottomWidth: 2,
+        marginBottom: 5,
     },
 });
 

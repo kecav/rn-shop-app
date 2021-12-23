@@ -1,5 +1,5 @@
 export default {
-    primary: "royalblue",
-    accent: "darkblue",
-    logout: "#A01",
+    primary: "#30475E",
+    accent: "#30475E",
+    logout: "#F05454",
 }

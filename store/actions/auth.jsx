@@ -59,7 +59,7 @@ export const login = (email, password) => {
             email,
             password
         );
-        console.log("SIGNED IN : ");
+        // console.log("SIGNED IN : ");
 
         dispatch(
             authenticate(
@@ -108,7 +108,7 @@ const setLogoutTimer = (expirationTime) => {
         timer = setTimeout(() => {
             console.log("TOKEN EXPIRED LOGGING OUT ");
             dispatch(logout());
-        }, expirationTime / 5);
+        }, expirationTime / 10);
     };
 };
 

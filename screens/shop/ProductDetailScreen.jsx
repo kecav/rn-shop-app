@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import Colors from "../../constants/Colors";
 import * as cartActions from "../../store/actions/cart";
+import CustomButton from "../../components/UI/CustomButton";
 
 const ProductDetailScreen = (props) => {
     const { productId } = props.route.params;
@@ -26,8 +27,8 @@ const ProductDetailScreen = (props) => {
                 source={{ uri: selectedProduct.imageUrl }}
             />
             <View style={styles.actions}>
-                <Button
-                    color={Colors.primary}
+                <CustomButton
+                    disabled={false}
                     title="Add to cart"
                     onPress={() =>
                         dispatch(cartActions.addToCart(selectedProduct))
@@ -62,8 +63,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     price: {
-        fontSize: 20,
-        color: "#dedede",
+        fontSize: 24,
+        color: "#000000",
         textAlign: "center",
     },
     description: {
