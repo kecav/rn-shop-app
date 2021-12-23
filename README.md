@@ -1,6 +1,6 @@
 # React Native Shop App 
 
-![UI Design](../assets/screenshots/UI.png)
+![UI Design](https://raw.githubusercontent.com/kecav/rn-shop-app/expo-sdk44/assets/screenshots/UI.png)
 
 
 
